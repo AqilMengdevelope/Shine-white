@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ApplyForm } from "@/components/ApplyForm";
 import { PageHero } from "@/components/Bits";
@@ -22,16 +23,23 @@ export default function TeamPage() {
       <section className="py-14 sm:py-20" aria-labelledby="mgmt-title">
         <div className="container-page">
           <h2 id="mgmt-title" className="text-3xl font-bold">Management Team</h2>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {management.map((m) => (
-              <li key={m.name} className="card flex gap-4 p-5">
-                <span className="grid size-14 shrink-0 place-items-center bg-brand font-display text-xl font-bold text-white" aria-hidden="true">
-                  {m.name.split(" ")[1][0]}
-                </span>
-                <div>
-                  <h3 className="text-xl font-bold">{m.name}</h3>
-                  <p className="text-sm font-semibold text-brand">{m.role}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{m.blurb}</p>
+              <li key={m.name} className="card lift group flex flex-col overflow-hidden">
+                <div className="relative aspect-[4/5] overflow-hidden bg-paper">
+                  <Image
+                    src={`/team/${m.photo}.webp`}
+                    alt={`Portrait of ${m.name}`}
+                    fill
+                    sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 22vw, (min-width: 640px) 30vw, 46vw"
+                    className="object-cover object-top transition duration-500 group-hover:scale-105"
+                  />
+                  <span className="absolute inset-x-0 bottom-0 h-1 bg-gold" aria-hidden="true" />
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="text-lg font-bold">{m.name}</h3>
+                  <p className="mt-0.5 text-sm font-semibold leading-snug text-brand">{m.role}</p>
+                  <p className="mt-2 text-sm leading-relaxed">{m.blurb}</p>
                 </div>
               </li>
             ))}

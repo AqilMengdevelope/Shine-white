@@ -277,18 +277,19 @@ export const footerBlurb =
   "Shine White Cleaning provides professional cleaning services to corporate offices, residential houses and property owners in Malaysia. We have a team of experienced and well-trained cleaners who have knowledge in cleaning, sanitising and tidying properties.";
 
 /* ---------- Team ---------- */
+// Photos come from the old i1cleaner.com/team page (public/team/<photo>.webp).
 
 export const management = [
-  { name: "Mr. Teng", role: "Managing Director", blurb: "Leads the company, setting strategic goals and ensuring we deliver outstanding janitorial services." },
-  { name: "Ms. Vani", role: "Administrative", blurb: "Handles a variety of tasks to ensure our office runs smoothly and efficiently." },
-  { name: "Mr. Nicky", role: "Operation Manager (AirCond)", blurb: "Good management consists in showing average people how to do the work of superior people." },
-  { name: "Mr. Vincent", role: "Assistant Operation Manager (AirCond)", blurb: "Success is walking from failure to failure with no loss of enthusiasm." },
-  { name: "Ms. How", role: "Finance Director", blurb: "A number is not just a number, it is a piece of code that shows you all the information you need." },
-  { name: "Mr. Lee", role: "Operation Manager (Cleaning)", blurb: "Oversees all operations, ensuring our team delivers top-notch janitorial services efficiently and effectively." },
-  { name: "Mr. Thomas", role: "Transporter", blurb: "Ensures timely delivery of equipment and supplies, supporting our janitorial teams in their work." },
-  { name: "Mr. Brian", role: "Marketing Director", blurb: "Develops and implements marketing strategies to promote our cleaning services and attract new clients." },
-  { name: "Mr. Zhun", role: "Transporter", blurb: "Supports the manager in daily operations, helping to oversee staff and ensure quality service." },
-  { name: "Ms. Shikin", role: "Sales Executive", blurb: "Connects with potential clients, showcasing the benefits of our janitorial services and driving business growth." },
+  { name: "Mr. Teng", photo: "teng", role: "Managing Director", blurb: "Leads the company, setting strategic goals and ensuring we deliver outstanding janitorial services." },
+  { name: "Ms. Vani", photo: "vani", role: "Administrative", blurb: "Handles a variety of tasks to ensure our office runs smoothly and efficiently." },
+  { name: "Mr. Nicky", photo: "nicky", role: "Operation Manager (AirCond)", blurb: "Good management consists in showing average people how to do the work of superior people." },
+  { name: "Mr. Vincent", photo: "vincent", role: "Assistant Operation Manager (AirCond)", blurb: "Success is walking from failure to failure with no loss of enthusiasm." },
+  { name: "Ms. How", photo: "how", role: "Finance Director", blurb: "A number is not just a number, it is a piece of code that shows you all the information you need." },
+  { name: "Mr. Lee", photo: "lee", role: "Operation Manager (Cleaning)", blurb: "Oversees all operations, ensuring our team delivers top-notch janitorial services efficiently and effectively." },
+  { name: "Mr. Thomas", photo: "thomas", role: "Transporter", blurb: "Ensures timely delivery of equipment and supplies, supporting our janitorial teams in their work." },
+  { name: "Mr. Brian", photo: "brian", role: "Marketing Director", blurb: "Develops and implements marketing strategies to promote our cleaning services and attract new clients." },
+  { name: "Mr. Zhun", photo: "zhun", role: "Transporter", blurb: "Supports the manager in daily operations, helping to oversee staff and ensure quality service." },
+  { name: "Ms. Shikin", photo: "shikin", role: "Sales Executive", blurb: "Connects with potential clients, showcasing the benefits of our janitorial services and driving business growth." },
 ];
 
 /* ---------- FAQ ---------- */
