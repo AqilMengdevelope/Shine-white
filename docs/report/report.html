@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shine White Cleaning: Website Audit and Rebuild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #14171f; --body: #474c59; --muted: #636a79;
+    --brand: #1b4e9b; --brand-dark: #123a78; --deep: #0c2854;
+    --tint: #e9f0fa; --paper: #f5f6f8; --line: #e3e6ec;
+    --gold: #f4a911; --red: #c4322c; --red-tint: #fbeceb; --green: #1e8a4a; --green-tint: #e8f5ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font: 10pt/1.55 Inter, sans-serif; color: var(--body); background: #fff; }
+  h1, h2, h3, h4 { font-family: Sora, sans-serif; color: var(--ink); letter-spacing: -0.02em; line-height: 1.15; }
+  strong { color: var(--ink); font-weight: 600; }
+  code { font: 8.5pt/1 ui-monospace, Menlo, monospace; background: var(--paper); padding: 1px 4px; color: var(--ink); }
+
+  .page { width: 210mm; min-height: 297mm; padding: 16mm 16mm 18mm; position: relative; page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .folio { position: absolute; left: 16mm; right: 16mm; bottom: 9mm; display: flex; justify-content: space-between; font-size: 7.5pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 3mm; }
+
+  .hl { color: var(--brand); background: linear-gradient(var(--gold), var(--gold)) left bottom / 100% 2.5px no-repeat; padding-bottom: 1px; }
+  .tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; background: var(--tint); color: var(--brand); font: 700 7.5pt/1.3 Sora, sans-serif; letter-spacing: 0.02em; }
+  .tag::before { content: ""; width: 5px; height: 5px; background: currentColor; }
+
+  /* Cover */
+  .cover { padding: 0; color: rgba(255,255,255,.85);
+    background: repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 2px, transparent 2px 22px), linear-gradient(140deg, var(--brand) 0%, var(--deep) 100%); }
+  .cover-in { padding: 20mm 18mm 0; }
+  .cover .brand { display: flex; align-items: center; gap: 10px; }
+  .cover .brand img { width: 13mm; height: 13mm; background: #fff; border-radius: 50%; padding: 1.5mm; }
+  .cover .brand b { display: block; font: 800 12pt Sora, sans-serif; color: #fff; letter-spacing: -.01em; }
+  .cover .brand span { display: block; font: 600 7pt Inter; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+  .cover h1 { margin-top: 26mm; font-size: 34pt; font-weight: 800; color: #fff; line-height: 1.05; }
+  .cover h1 em { font-style: normal; color: #fff; background: linear-gradient(var(--gold), var(--gold)) left bottom / 100% 4px no-repeat; }
+  .cover .lede { margin-top: 7mm; max-width: 140mm; font-size: 11.5pt; line-height: 1.6; }
+  .cover .meta { margin-top: 9mm; display: flex; gap: 10mm; font-size: 8.5pt; }
+  .cover .meta b { display: block; color: #fff; font: 700 9.5pt Sora; }
+  .cover .pair { position: absolute; left: 18mm; right: 18mm; bottom: 18mm; display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .cover .pair figure { background: #fff; padding: 1.5mm; box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); }
+  .cover .pair img { width: 100%; display: block; }
+  .cover .pair figcaption { font: 700 8pt Sora; color: var(--ink); padding: 2mm 1mm 0.5mm; display: flex; align-items: center; gap: 6px; }
+
+  .label { display: inline-block; font: 700 7pt/1 Sora, sans-serif; letter-spacing: .08em; text-transform: uppercase; padding: 3px 6px; color: #fff; }
+  .label.old { background: var(--red); }
+  .label.new { background: var(--green); }
+
+  /* Headings */
+  .sec-head { margin-bottom: 7mm; }
+  .sec-head h2 { margin-top: 3mm; font-size: 20pt; font-weight: 800; }
+  .sec-head p { margin-top: 2.5mm; max-width: 155mm; font-size: 10pt; }
+
+  /* Summary */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 3px solid var(--gold); background: var(--deep);
+    background: repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 2px, transparent 2px 22px), linear-gradient(120deg, var(--brand), var(--deep)); color: rgba(255,255,255,.8); }
+  .kpis div { padding: 5mm 4mm; border-left: 1px solid rgba(255,255,255,.15); }
+  .kpis div:first-child { border-left: 0; }
+  .kpis b { display: block; font: 800 17pt/1.1 Sora; color: #fff; }
+  .kpis b s { font: 600 9pt Sora; color: rgba(255,255,255,.55); margin-right: 4px; }
+  .kpis span { font-size: 7.5pt; display: block; margin-top: 1.5mm; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.6pt; }
+  th { text-align: left; font: 700 7.5pt Sora; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); padding: 1.8mm 2.5mm; border-bottom: 1.5px solid var(--ink); }
+  td { padding: 1.35mm 2.5mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td:first-child { width: 7mm; font: 700 8pt Sora; color: var(--brand); }
+  tr { break-inside: avoid; }
+  td.o { color: var(--body); }
+  td.n { color: var(--ink); }
+  .cat { margin: 5mm 0 1.5mm; display: flex; align-items: center; gap: 3mm; }
+  .cat h3 { font-size: 11.5pt; }
+  .cat span { flex: 1; height: 1px; background: var(--line); }
+
+  /* Comparison block */
+  .cmp { break-inside: avoid; margin-bottom: 8mm; }
+  .cmp h3 { font-size: 13pt; display: flex; align-items: baseline; gap: 3mm; }
+  .cmp h3 i { font: 800 9pt Sora; font-style: normal; color: #fff; background: var(--brand); padding: 1.5px 6px; }
+  .cmp .grid { margin-top: 3.5mm; display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .cmp figure { border: 1px solid var(--line); background: #fff; }
+  .cmp figure img { width: 100%; display: block; border-bottom: 1px solid var(--line); }
+  .cmp figcaption { padding: 2.6mm 3mm 3mm; font-size: 8.4pt; line-height: 1.5; }
+  .cmp figcaption .label { margin-bottom: 1.5mm; }
+  .cmp.old-only .grid, .cmp.single .grid { grid-template-columns: 1fr; }
+  .crop-top img { height: 62mm; object-fit: cover; object-position: top; }
+  .crop-mid img { height: 62mm; object-fit: cover; object-position: center; }
+  .tight .crop-top img, .tight .crop-mid img { height: 44mm; }
+  .tight .cmp figcaption { padding: 2mm 3mm 2.4mm; }
+  .tight .cmp .grid { margin-top: 2.5mm; }
+  .tight .cmp { margin-bottom: 6mm; }
+  .whole img { height: auto !important; }
+
+  .note { margin-top: 3mm; padding: 3mm 4mm; background: #fff8e6; border: 1px solid #f3dca2; font-size: 8.4pt; color: #6b4e00; }
+  .note b { color: #4f3900; }
+
+  .new-feature { display: grid; grid-template-columns: 1.25fr 1fr; gap: 6mm; align-items: start; break-inside: avoid; margin-bottom: 8mm; }
+  .new-feature figure { border: 1px solid var(--line); }
+  .new-feature img { width: 100%; display: block; }
+  .new-feature h3 { font-size: 13pt; margin-top: 2mm; }
+  .new-feature p { margin-top: 2.5mm; font-size: 9pt; }
+  .new-feature ul { margin: 3mm 0 0 4mm; font-size: 9pt; }
+  .new-feature li { margin-bottom: 1.5mm; }
+
+  .phone { display: grid; grid-template-columns: 55mm 1fr; gap: 8mm; align-items: center; break-inside: avoid; }
+  .phone figure { border: 6px solid var(--ink); border-radius: 7mm; overflow: hidden; }
+  .phone img { width: 100%; display: block; }
+
+  .steps { counter-reset: s; list-style: none; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 4mm 11mm; break-inside: avoid; }
+  .steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: 0; font: 800 8pt Sora; color: #fff; background: var(--brand); padding: 2px 5px; }
+  .steps li b { display: block; font: 700 10pt Sora; color: var(--ink); margin-bottom: .5mm; }
+
+  .todo li { margin: 0 0 2.5mm 4.5mm; }
+  .cta { margin-top: 8mm; padding: 7mm; color: rgba(255,255,255,.85);
+    background: repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 2px, transparent 2px 22px), linear-gradient(120deg, var(--brand), var(--deep)); }
+  .cta h3 { color: #fff; font-size: 14pt; }
+  .cta p { margin-top: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="page cover">
+  <div class="cover-in">
+    <div class="brand">
+      <img src="../../public/logo.png" alt="">
+      <div><b>SHINE WHITE</b><span>Cleaning Services</span></div>
+    </div>
+    <h1>Website audit<br>and <em>rebuild</em></h1>
+    <p class="lede">What was holding back i1cleaner.com, and how the new site fixes it: a page-by-page comparison of the current Wix site and the proposed Next.js rebuild.</p>
+    <div class="meta">
+      <div><b>Site reviewed</b>www.i1cleaner.com</div>
+      <div><b>Audit date</b>12 November 2026</div>
+      <div><b>Pages reviewed</b>15</div>
+    </div>
+  </div>
+  <div class="pair">
+    <figure><img src="shots/old-home.jpg" alt="Current homepage"><figcaption><span class="label old">Current</span> i1cleaner.com today</figcaption></figure>
+    <figure><img src="shots/new-home.jpg" alt="Proposed homepage"><figcaption><span class="label new">Proposed</span> The rebuilt homepage</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ SUMMARY ============ -->
+<section class="page">
+  <div class="sec-head">
+    <span class="tag">At a glance</span>
+    <h2>The short <span class="hl">version</span></h2>
+    <p>Every page, section and piece of copy on the current site is carried over. The rebuild fixes the mistakes below, makes each page faster and clearer, and adds three things the current site cannot do: let customers pick their own cleaner, show real before-and-after results, and keep old Google links working.</p>
+  </div>
+
+  <div class="kpis">
+    <div><b><s>1.09 MB</s>125 KB</b><span>Largest page, HTML only (was 650 KB–1.09 MB)</span></div>
+    <div><b><s>68</s>31</b><span>Script tags on the homepage</span></div>
+    <div><b><s>4/15</s>All</b><span>Pages with a proper main heading</span></div>
+    <div><b><s>0</s>26</b><span>Cleaners customers can choose and book directly</span></div>
+  </div>
+
+  <div class="cat"><h3>What was found</h3><span></span></div>
+  <table>
+    <tr><th></th><th>Area</th><th>Main problems on the current site</th><th style="width:20mm">Findings</th></tr>
+    <tr><td>1</td><td><strong>Content</strong></td><td class="o">Wrong city on the Putrajaya page, a leftover “copy-of” page, copy-paste errors in the service-area list, contradicting payment and email details, typos.</td><td>10</td></tr>
+    <tr><td>2</td><td><strong>Structure</strong></td><td class="o">Inconsistent URLs, 11 pages with no main heading, dead-end service pages, no way to choose a cleaner.</td><td>6</td></tr>
+    <tr><td>3</td><td><strong>Search (SEO)</strong></td><td class="o">Keyword-stuffed titles, duplicated titles, broken business data for Google, keyword-stuffed image descriptions.</td><td>7</td></tr>
+    <tr><td>4</td><td><strong>Design &amp; speed</strong></td><td class="o">Heavy pages, off-brand clashing colours, no proof of results, weak keyboard accessibility.</td><td>6</td></tr>
+  </table>
+
+  <div class="cat"><h3>What was added</h3><span></span></div>
+  <table>
+    <tr><th></th><th>Feature</th><th>What it does</th></tr>
+    <tr><td>+</td><td><strong>Cleaners page</strong></td><td class="n">All 26 cleaners from the Setmore account, each linking straight to their own booking page.</td></tr>
+    <tr><td>+</td><td><strong>Before/after swipe</strong></td><td class="n">Move across a photo to wipe it from dirty to clean. Works with mouse, finger and keyboard.</td></tr>
+    <tr><td>+</td><td><strong>Number counter</strong></td><td class="n">Key figures count up as the visitor scrolls to them.</td></tr>
+    <tr><td>+</td><td><strong>Old link redirects</strong></td><td class="n">All nine old service and location addresses forward to their new page, so Google rankings carry over.</td></tr>
+    <tr><td>+</td><td><strong>WhatsApp everywhere</strong></td><td class="n">A WhatsApp button on every page, and a job application form that sends straight to WhatsApp.</td></tr>
+  </table>
+
+  <div class="folio"><span>Shine White Cleaning · Website audit and rebuild</span><span>2</span></div>
+</section>
+
+<!-- ============ VISUAL COMPARISONS 1 ============ -->
+<section class="page">
+  <div class="sec-head">
+    <span class="tag">Side by side</span>
+    <h2>What visitors <span class="hl">see</span></h2>
+  </div>
+
+  <div class="cmp">
+    <h3><i>01</i> First impression</h3>
+    <div class="grid">
+      <figure class="crop-top"><img src="shots/old-home.jpg" alt=""><figcaption><span class="label old">Current</span><br>Neon blue and lime blocks, a headline typed as “HoUSE”, small thin text, and two competing buttons with an “OR” between them. Nothing shows what a clean actually looks like.</figcaption></figure>
+      <figure class="crop-top"><img src="shots/new-home.jpg" alt=""><figcaption><span class="label new">Proposed</span><br>One palette taken from the logo, a clear headline, four reasons to book, and a before/after photo the visitor can wipe clean right in the hero.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="cmp">
+    <h3><i>02</i> The Putrajaya page talks about Cyberjaya</h3>
+    <div class="grid">
+      <figure class="crop-top"><img src="shots/old-putrajaya.jpg" alt=""><figcaption><span class="label old">Current</span><br>At <code>/putrajaya</code> the heading reads “Cleaning Service Cyberjaya” and every paragraph says Cyberjaya. The page was copied and never edited.</figcaption></figure>
+      <figure class="crop-top"><img src="shots/new-putrajaya.jpg" alt=""><figcaption><span class="label new">Proposed</span><br>Location pages come from one template, so the place name is always right. Putrajaya now also has all five service pages, not just House Cleaning.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="folio"><span>Shine White Cleaning · Website audit and rebuild</span><span>3</span></div>
+</section>
+
+<!-- ============ VISUAL COMPARISONS 2 ============ -->
+<section class="page tight">
+  <div class="cmp">
+    <h3><i>03</i> Service pages are dead ends</h3>
+    <div class="grid">
+      <figure class="crop-top"><img src="shots/old-service.jpg" alt=""><figcaption><span class="label old">Current</span><br>One short paragraph in thin pale text, then straight into the footer. No list of what is included, no link to related services.</figcaption></figure>
+      <figure class="crop-top"><img src="shots/new-service.jpg" alt=""><figcaption><span class="label new">Proposed</span><br>A breadcrumb, a clear heading, the included tasks, links to the other services in that area, booking and call buttons, and the before/after photos.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="cmp">
+    <h3><i>04</i> Service tiles</h3>
+    <div class="grid">
+      <figure class="crop-top"><img src="shots/old-services.jpg" alt=""><figcaption><span class="label old">Current</span><br>Pink, lime, cyan and red stock-photo tiles that clash with each other and with the blue logo. The labels are hard to read on the photos.</figcaption></figure>
+      <figure class="crop-mid"><img src="shots/new-services.jpg" alt=""><figcaption><span class="label new">Proposed</span><br>Six matching photo cards in the brand blue, each with a short description. Hovering a card brings its photo back to full colour.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="cmp">
+    <h3><i>05</i> How to book</h3>
+    <div class="grid">
+      <figure class="whole"><img src="shots/old-booking.jpg" alt=""><figcaption><span class="label old">Current</span><br>Five boxes on a bright lime background, with tiny step text and the grammar slip “Your Booking will Confirmed”.</figcaption></figure>
+      <figure class="whole"><img src="shots/new-booking.jpg" alt=""><figcaption><span class="label new">Proposed</span><br>A simple five-step timeline ending in a gold “confirmed” step, with Book Now and Choose Your Cleaner right underneath.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="folio"><span>Shine White Cleaning · Website audit and rebuild</span><span>4</span></div>
+</section>
+
+<!-- ============ NEW FEATURES ============ -->
+<section class="page">
+  <div class="sec-head">
+    <span class="tag">New on the site</span>
+    <h2>Three things the current site <span class="hl">cannot do</span></h2>
+  </div>
+
+  <div class="new-feature">
+    <figure><img src="shots/new-cleaners.jpg" alt=""></figure>
+    <div>
+      <span class="label new">New page</span>
+      <h3>Choose your own cleaner</h3>
+      <p>The Team page used to say “Cleaners” with nothing under it. The new <code>/cleaners</code> page shows all 26 cleaners from the Setmore account with photo, name and tagline.</p>
+      <p>Tapping a cleaner opens their own Setmore booking page. For example, Desi opens <code>shinewhite.setmore.com/team/cyfI0H9W…</code>. Every “Book a Cleaner” button on the site now leads here.</p>
+    </div>
+  </div>
+
+  <div class="new-feature">
+    <figure><img src="shots/new-slider.jpg" alt=""></figure>
+    <div>
+      <span class="label new">New section</span>
+      <h3>Before and after, in their hands</h3>
+      <p>The three before/after photos were split into separate images. Moving across a photo wipes it from dirty to clean.</p>
+      <ul>
+        <li>Mouse: the divider follows the pointer.</li>
+        <li>Phone: drag the gold handle.</li>
+        <li>Keyboard: arrow keys move it.</li>
+      </ul>
+      <p>It appears on the homepage, the services overview and every service page. The homepage version plays one sweep on load to show it can be moved.</p>
+    </div>
+  </div>
+
+  <div class="new-feature" style="grid-template-columns:1.25fr 1fr">
+    <figure><img src="shots/new-stats.jpg" alt=""></figure>
+    <div>
+      <span class="label new">New section</span>
+      <h3>Animated number counter</h3>
+      <p>The figures count up from zero when the visitor scrolls to them.</p>
+      <div class="note"><b>Placeholder figures.</b> “26 trained cleaners” and “8 years” are real. “12,500+ homes and offices cleaned” and “98% book again” are examples for this proposal and must be replaced with your real numbers.</div>
+    </div>
+  </div>
+
+  <div class="folio"><span>Shine White Cleaning · Website audit and rebuild</span><span>5</span></div>
+</section>
+
+<!-- ============ FULL FINDINGS 1 ============ -->
+<section class="page">
+  <div class="sec-head">
+    <span class="tag">Full list</span>
+    <h2>Every mistake and its <span class="hl">fix</span></h2>
+  </div>
+
+  <div class="cat"><h3>1 · Content</h3><span></span></div>
+  <table>
+    <tr><th></th><th style="width:47%">Mistake on the current site</th><th>Fix</th></tr>
+    <tr><td>1.1</td><td class="o">Homepage headline typed as “Give Your HoUSE Shine &amp; WHITE”.</td><td class="n">“Give Your House Shine &amp; White”.</td></tr>
+    <tr><td>1.2</td><td class="o"><code>/putrajaya</code> is headed “Cleaning Service CYBERJAYA” and talks about Cyberjaya.</td><td class="n">Location pages come from one template, so the place name is always right.</td></tr>
+    <tr><td>1.3</td><td class="o">A leftover duplicate page is live at <code>/copy-of-house-cleaning-service-cyberjaya</code>.</td><td class="n">Removed. The address forwards to the Cyberjaya page.</td></tr>
+    <tr><td>1.4</td><td class="o">Service-area list has copy-paste errors: Nilai lists Puchong services, entries repeat, 16 Sierra has no Deep Cleaning.</td><td class="n">Generated from one list of areas and one list of services, so every area shows the same five services once.</td></tr>
+    <tr><td>1.5</td><td class="o">FAQ says “We only accept cash”; the policy on the same page says “cash/bank transfer”.</td><td class="n">FAQ now says cash or bank transfer. <em>To confirm.</em></td></tr>
+    <tr><td>1.6</td><td class="o">Footer shows <code>info@i1cleaner.com</code> but the link opens <code>shinewhite88@outlook.com</code>.</td><td class="n">One address everywhere: <code>info@i1cleaner.com</code>. <em>To confirm.</em></td></tr>
+    <tr><td>1.7</td><td class="o">Typos: “Your Booking will Confirmed”, “Whatapps Us Now!!!”, “Customise d House Cleaning Package”, “we are happily help you”, “Can i request…”.</td><td class="n">Corrected without changing the meaning.</td></tr>
+    <tr><td>1.8</td><td class="o">Team blurbs inconsistent; every card has a “Read More” button that leads nowhere useful.</td><td class="n">Blurbs tidied; dead buttons removed.</td></tr>
+    <tr><td>1.9</td><td class="o">Footer still links to Google+, which shut down in 2019.</td><td class="n">Removed. Facebook, Instagram and Yelp kept.</td></tr>
+    <tr><td>1.10</td><td class="o">Three different Facebook addresses used across the page.</td><td class="n">One: <code>facebook.com/i1cleaner</code>.</td></tr>
+  </table>
+
+  <div class="cat"><h3>2 · Structure and navigation</h3><span></span></div>
+  <table>
+    <tr><th></th><th style="width:47%">Mistake on the current site</th><th>Fix</th></tr>
+    <tr><td>2.1</td><td class="o">Hard-to-read, inconsistent URLs such as <code>/move-inmove-outcleaningcyberjaya</code>; two different pages called “cleaning service cyberjaya”.</td><td class="n">One pattern: <code>/cleaning-service/&lt;area&gt;/&lt;service&gt;</code>.</td></tr>
+    <tr><td>2.2</td><td class="o">Putrajaya only has a House Cleaning page.</td><td class="n">Cyberjaya and Putrajaya both have all five service pages.</td></tr>
+    <tr><td>2.3</td><td class="o">11 of 15 pages have no main heading; Contact’s is “HEADQUARTER”.</td><td class="n">Every page has one clear main heading.</td></tr>
+    <tr><td>2.4</td><td class="o">No way to see or choose a cleaner.</td><td class="n">New Cleaners page with direct booking links.</td></tr>
+    <tr><td>2.5</td><td class="o">Service pages are one paragraph and a button.</td><td class="n">Included tasks, related services, booking options and before/after photos on each.</td></tr>
+    <tr><td>2.6</td><td class="o">Phone number and booking button easy to lose on a phone.</td><td class="n">Sticky header with Book a Cleaner, tap-to-call, and a WhatsApp button on every page.</td></tr>
+  </table>
+
+  <div class="folio"><span>Shine White Cleaning · Website audit and rebuild</span><span>6</span></div>
+</section>
+
+<!-- ============ FULL FINDINGS 2 ============ -->
+<section class="page">
+  <div class="cat" style="margin-top:0"><h3>3 · Search (SEO)</h3><span></span></div>
+  <table>
+    <tr><th></th><th style="width:47%">Mistake on the current site</th><th>Fix</th></tr>
+    <tr><td>3.1</td><td class="o">Titles are keyword lists, e.g. Contact: “Contact Us | Shine White Cleaning | Malaysia | 16 sierra | presint | precint”.</td><td class="n">Clear titles: “Contact Us | Shine White Cleaning Services”.</td></tr>
+    <tr><td>3.2</td><td class="o">Curtain Cleaning page titled “Cleaning Service Cyberjaya”, the same as two other pages.</td><td class="n">A unique title per page, e.g. “Curtain Cleaning Cyberjaya”.</td></tr>
+    <tr><td>3.3</td><td class="o">Team description is “Join us now.”; the Blog description is three drafts pasted together.</td><td class="n">One written description per page.</td></tr>
+    <tr><td>3.4</td><td class="o">Homepage has three overlapping blocks of business data for Google, one pointing to images that do not exist. Other pages have none.</td><td class="n">One correct business block on every page (address, phone, hours, areas), plus FAQ data on the FAQ page.</td></tr>
+    <tr><td>3.5</td><td class="o">Image descriptions stuffed with keywords; five client logos all called “customer cleaning”; 3–7 images per page with none.</td><td class="n">Every image has a plain description; logos use the client’s name.</td></tr>
+    <tr><td>3.6</td><td class="o">Uses the <code>keywords</code> tag, which Google ignores.</td><td class="n">Dropped.</td></tr>
+    <tr><td>3.7</td><td class="o">No plan for keeping old links working after a rebuild.</td><td class="n">All nine old addresses permanently forward to their new page. Sitemap and robots file generated.</td></tr>
+  </table>
+
+  <div class="cat"><h3>4 · Design, speed and accessibility</h3><span></span></div>
+  <table>
+    <tr><th></th><th style="width:47%">Mistake on the current site</th><th>Fix</th></tr>
+    <tr><td>4.1</td><td class="o">Each page sends 650 KB–1.09 MB of HTML and 65+ scripts before any image loads.</td><td class="n">Pages are pre-built: 42–125 KB of HTML. Images served as WebP at the size each screen needs.</td></tr>
+    <tr><td>4.2</td><td class="o">Clashing pink, lime and red tiles that have nothing to do with the brand.</td><td class="n">One palette from the logo: brand blue with a gold accent. Matching photo cards.</td></tr>
+    <tr><td>4.3</td><td class="o">Nothing shows what a clean looks like.</td><td class="n">Before/after swipe section with real photos.</td></tr>
+    <tr><td>4.4</td><td class="o">FAQ is a script-heavy widget; the FAQ page is the heaviest at 1.09 MB.</td><td class="n">Simple expand/collapse that works without JavaScript.</td></tr>
+    <tr><td>4.5</td><td class="o">Weak keyboard focus styles.</td><td class="n">Visible focus ring, “Skip to content” link, large tap targets, reduced-motion support.</td></tr>
+    <tr><td>4.6</td><td class="o">Booking links mix <code>http://</code> and <code>https://</code>.</td><td class="n">All <code>https://</code>.</td></tr>
+  </table>
+
+  <div class="folio"><span>Shine White Cleaning · Website audit and rebuild</span><span>7</span></div>
+</section>
+
+<!-- ============ HOW + NEXT ============ -->
+<section class="page">
+  <div class="sec-head">
+    <span class="tag">How it was done</span>
+    <h2>From audit to <span class="hl">new site</span></h2>
+  </div>
+
+  <div class="phone">
+    <figure><img src="shots/new-mobile.jpg" alt="The new homepage on a phone"></figure>
+    <ol class="steps">
+      <li><b>Audit every page</b>Downloaded all 15 pages of the current site and pulled out every heading, paragraph, link and image.</li>
+      <li><b>One home for all the words</b>All copy lives in one file, so text is edited once and pages cannot drift apart again.</li>
+      <li><b>Rebuild on Next.js</b>Each page is pre-built for speed. Location and service pages share one template.</li>
+      <li><b>Reuse the brand</b>The existing logo and client logos are kept; every image is resized and converted to WebP.</li>
+      <li><b>Test on desktop and phone</b>Checked in a browser at both sizes: no errors, no sideways scrolling, slider, cleaner links and old-address forwarding all working.</li>
+    </ol>
+  </div>
+
+  <div class="cat"><h3>Still to do before launch</h3><span></span></div>
+  <ul class="todo">
+    <li><strong>Counter figures:</strong> replace the two example numbers with real ones.</li>
+    <li><strong>Confirm details:</strong> payment methods (cash or bank transfer) and which email inbox to show.</li>
+    <li><strong>Malay and Chinese pages</strong> (<code>/ms</code>, <code>/zh</code>) are not rebuilt yet.</li>
+    <li><strong>Blog articles:</strong> the 20 latest posts are listed but still open on the current site; their full text needs moving across.</li>
+    <li><strong>Privacy Statement</strong> from the old FAQ page needs its text supplied.</li>
+    <li><strong>Hosting and domain:</strong> the new site is ready to deploy but not live yet.</li>
+  </ul>
+
+  <div class="cta">
+    <h3>Shine Your Property, Our Priority.</h3>
+    <p>The same business and content, presented so visitors trust it in seconds and can book the cleaner they want in two taps.</p>
+  </div>
+
+  <div class="folio"><span>Shine White Cleaning · Website audit and rebuild</span><span>8</span></div>
+</section>
+
+</body>
+</html>

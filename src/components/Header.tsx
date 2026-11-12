@@ -110,7 +110,7 @@ export function Header() {
             <span className="block font-display text-[1.05rem] font-extrabold text-brand">{site.phoneDisplay}</span>
           </a>
           <span className="hidden h-9 w-px bg-line md:block" aria-hidden="true" />
-          <a href={site.bookingUrl} className="btn btn-primary hidden sm:inline-flex">Book a Cleaner</a>
+          <Link href="/cleaners" className="btn btn-primary hidden sm:inline-flex">Book a Cleaner</Link>
           <button
             type="button"
             className="grid size-12 place-items-center border border-line text-ink xl:hidden"
@@ -173,7 +173,7 @@ export function Header() {
               ))}
             </ul>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <a href={site.bookingUrl} className="btn btn-primary">Book a Cleaner</a>
+              <Link href="/cleaners" onClick={close} className="btn btn-primary">Book a Cleaner</Link>
               <a href={site.phoneHref} className="btn btn-ghost">
                 <Icon name="phone" width={18} height={18} /> Call {site.phoneDisplay}
               </a>
